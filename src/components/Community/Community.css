@@ -1,0 +1,14 @@
+.Community {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    width: 400px;
+    padding: 25px;
+    background: var(--background);
+    color: var(--text);
+    box-shadow: 4px 4px 5px 2px var(--shadows);
+    border-radius: 15px;
+    border-top: 5px solid var(--accent);
+    transition: 0.3s;
+}

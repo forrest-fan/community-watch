@@ -1,0 +1,29 @@
+.Dashboard {
+    position: fixed;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: 400px;
+    padding: 25px;
+    background: var(--background);
+    color: var(--text);
+    box-shadow: 4px 4px 5px 2px var(--shadows);
+    border-radius: 15px;
+    border-top: 5px solid var(--accent);
+    transition: 0.3s;
+}
+
+.Dashboard .search-bar {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #aeaeae;
+    background: none;
+    font-family: Noto Sans;
+    font-size: 17px;
+    width: 100%;
+}
+
+.Dashboard .search-bar:focus {
+    border-color: var(--accent);
+}
+

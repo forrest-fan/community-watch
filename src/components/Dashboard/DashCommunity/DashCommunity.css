@@ -1,0 +1,29 @@
+.DashCommunity {
+    margin: 10px 5px;
+    display: grid;
+    grid-template-columns: 200px auto 50px;
+    cursor: pointer;
+}
+
+.DashCommunity h3, h4, h5 {
+    margin: 0.3em 0;
+}
+
+.DashCommunity .col3 {
+    text-align: right;
+}
+
+.DashCommunity .col3 .change {
+    font-weight: bold;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.DashCommunity .col3 .change.gain {
+    color: #198d0a;
+}
+
+.DashCommunity .col3 .change.loss {
+    color: #8d0a0a;
+}
