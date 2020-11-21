@@ -12,3 +12,16 @@
     border-top: 5px solid var(--accent);
     transition: 0.3s;
 }
+
+.Community .header h1, h3, h4 {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.Community .change.gain {
+    color: #198d0a;
+}
+
+.Community .change.loss {
+    color: #8d0a0a;
+}
