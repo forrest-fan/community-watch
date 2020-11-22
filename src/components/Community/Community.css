@@ -13,6 +13,20 @@
     transition: 0.3s;
 }
 
+
+.Community .exit {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.Community .exit:hover {
+    color: #8d0a0a;
+}
+
+
 .Community .header h1, h3, h4 {
     display: inline-block;
     margin-right: 15px;

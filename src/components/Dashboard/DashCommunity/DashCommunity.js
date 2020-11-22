@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import './DashCommunity.css';
 
 class DashCommunity extends Component {
+
     render() {
         return(
-            <div className='DashCommunity'>
+            <div className='DashCommunity' onClick={() => {
+                this.props.openCommunity(this.props.communityData);
+            }}>
                 <div className='col1'>
                     <h3>{this.props.communityData.name}</h3>
                     <h5>{this.props.communityData.municipality.toUpperCase()}</h5>

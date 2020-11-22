@@ -7,7 +7,6 @@ class Dashboard extends Component {
         return(
             <div className='Dashboard'>
                 <h1>Community Watch</h1>
-                <input className='search-bar' placeholder='Search communities'></input>
                 <h2>My Watchlist</h2>
                 <DashCommunity 
                     communityData={{
@@ -16,6 +15,7 @@ class Dashboard extends Component {
                         avgPrice: 789129,
                         change: 3.12
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
                 <DashCommunity 
                     communityData={{
@@ -24,6 +24,7 @@ class Dashboard extends Component {
                         avgPrice: 1293180,
                         change: 5.37
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
                 <hr />
                 <h2>Trending Communities</h2>
@@ -34,6 +35,7 @@ class Dashboard extends Component {
                         avgPrice: 954123,
                         change: -2.32
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
                 <DashCommunity 
                     communityData={{
@@ -42,6 +44,7 @@ class Dashboard extends Component {
                         avgPrice: 842512,
                         change: 1.10
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
                 <hr />
                 <h2>Biggest Gainers</h2>
@@ -52,6 +55,7 @@ class Dashboard extends Component {
                         avgPrice: 1453521,
                         change: 7.32
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
                 <DashCommunity 
                     communityData={{
@@ -60,6 +64,7 @@ class Dashboard extends Component {
                         avgPrice: 1356213,
                         change: 6.74
                     }}
+                    openCommunity={this.props.openCommunity}
                 />
             </div>
         );
