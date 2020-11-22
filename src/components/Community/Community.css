@@ -12,3 +12,72 @@
     border-top: 5px solid var(--accent);
     transition: 0.3s;
 }
+
+
+.Community .exit {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.Community .exit:hover {
+    color: #8d0a0a;
+}
+
+
+.Community .header h1, .Community .header h3, .Community .header h4 {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.Community .header button {
+    outline: none;
+    font-family: Questrial;
+    font-size: 16px;
+    padding: 4px 10px;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.Community .header button.add {
+    background: var(--background);
+    color: var(--accent);
+}
+
+.Community .header button.remove {
+    background: var(--accent);
+    color: var(--background);
+}
+
+.Community .change.gain {
+    color: #198d0a;
+}
+
+.Community .change.loss {
+    color: #8d0a0a;
+}
+
+.Community .stats .grid {
+    display: grid;
+    grid-template-columns: auto 150px;
+    grid-template-rows: 20px 20px 20px;
+    font-size: 18px;
+}
+
+.Community .stats .grid h4 {
+    grid-column: 1;
+    margin: 0.4em 0;
+}
+
+.Community .stats .grid p {
+    grid-column: 2;
+    margin: 0.4em 0;
+    text-align: right;
+}
+
+.Community .data-disclaimer {
+    font-size: 14px;
+}
