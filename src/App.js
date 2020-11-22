@@ -8,12 +8,7 @@ import Communities from './communities.js';
 
 let poly = Toronto.features.map(community => {
   return ({
-    data: {
-      name: community.properties.AREA_NAME,
-      municipality: 'Toronto',
-      avgPrice: 789129,
-      change: 3.12
-    },
+    name: community.properties.AREA_NAME,
     path: community.geometry.coordinates[0].map(latlng => {
       return ({
         lng: latlng[0],
@@ -24,29 +19,46 @@ let poly = Toronto.features.map(community => {
 });
 
 export class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       communityOpen: false,
-      communityData: {
-        name: 'Hillcrest Village',
-        municipality: 'Toronto',
-        avgPrice: 789129,
-        change: 3.12
-      }
+      name: 'Leaside',
+      watchlist: []
     };
     this.openCommunity = this.openCommunity.bind(this);
+    this.updateWatch = this.updateWatch.bind(this);
   }
 
-  openCommunity(communityData) {
+  openCommunity(name) {
     if (this.state.communityOpen) {
-      this.setState({communityData: communityData});
+      this.setState({name: name});
     } else {
       this.setState({
         communityOpen: true,
-        communityData: communityData
+        name: name
       })
     }
+  }
+
+  updateWatch(community) {
+    let watchlist = this.state.watchlist;
+    let remove = false;
+    let index;
+    for (let i = 0; i < watchlist.length; i++) {
+      if (community === watchlist[i]) {
+        remove = true;
+        index = i;
+      }
+    }
+
+    if (remove) {
+      watchlist.splice(index, 1);
+    } else {
+      watchlist.push(community);
+    }
+
+    this.setState({watchlist: watchlist});
   }
 
   render() {
@@ -77,7 +89,7 @@ export class App extends Component {
                   }}
                   clickable={true}
                   onClick={()=>{
-                    this.openCommunity(community.data);
+                    this.openCommunity(community.name);
                   }}
                 />
               );
@@ -90,14 +102,17 @@ export class App extends Component {
               communityOpen: false
             });
           }}
+          watchlist={this.state.watchlist}
         /> 
         <Community 
-          communityData={this.state.communityData}
+          name={this.state.name}
           closeCommunity={()=>{
             this.setState({
               communityOpen: false
             });
           }}
+          watchlist={this.state.watchlist}
+          updateWatch={this.updateWatch}
           style={
             this.state.communityOpen ? {transform: 'translateX(0px)'} : {transform: 'translateX(470px)'}
           }

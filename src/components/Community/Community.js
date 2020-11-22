@@ -5,8 +5,8 @@ import Communities from '../../communities.js';
 import { Line } from 'react-chartjs-2';
 
 class Community extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         let initialData = {
             "name" : "Leaside",
             "city info" : {
@@ -449,23 +449,24 @@ class Community extends Component {
             ]
         };
         let prices = [];
-        let datasets = [];
+        let sales = [];
         let years = [];
         let lastYr;
         for (let i = 9; i >= 0; i--) {
-            let avgPrice = this.calculateAvg(initialData["sales info"][i].data).toFixed(0);
-            prices.push(avgPrice !== 0 ? avgPrice : this.calculateAvg(initialData["sales info"][i + 1].data).toFixed(0));
+            let avgPrice = Number(this.calculateAvg(initialData["sales info"][i].data, "Average Price").toFixed(0));
+            prices.push(avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(initialData["sales info"][i+1].data, "Average Price").toFixed(0)));
+            sales.push(this.total(initialData["sales info"][i].data, "Sales"));
             years.push(2019 - i);
             if (i === 0) {
-                lastYr = avgPrice !== 0 ? avgPrice : this.calculateAvg(initialData["sales info"][i + 1].data).toFixed(0);
+                lastYr = avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(initialData["sales info"][i+1].data, "Average Price").toFixed(0));
             }
         }
-        let avgPrice = this.calculateAvg(initialData["sales info"][10].data).toFixed(0);
-        prices.push(avgPrice !== 0 ? avgPrice : this.calculateAvg(initialData["sales info"][10].data).toFixed(0));
-        let thisYr = avgPrice !== 0 ? avgPrice : this.calculateAvg(initialData["sales info"][10].data).toFixed(0);
+        let thisYr = Number(this.calculateAvg(initialData["sales info"][10].data, "Average Price").toFixed(0));
+        prices.push(thisYr);
         let change = ((thisYr - lastYr) * 100 / lastYr).toFixed(2);
+        sales.push(this.total(initialData["sales info"][10].data, "Sales"));
         years.push(2020);
-        datasets.push({
+        let datasets = [{
             fill: true,
             borderColor: '#14185e',
             borderWidth: 2,
@@ -474,8 +475,20 @@ class Community extends Component {
             pointBackgroundColor: '#14185e',
             pointHoverRadius: 5,
             label: 'Avg. Price',
-            data: prices
-        });
+            data: prices,
+            yAxisID: 'price'
+        }, {
+            fill: false,
+            borderColor: '#e3690b',
+            borderWidth: 2,
+            pointBorderColor: '#e3690b',
+            pointRadius: 2,
+            pointBackgroundColor: '#e3690b',
+            pointHoverRadius: 5,
+            label: 'Sales',
+            data: sales,
+            yAxisID: 'sales'
+        }];
         this.state = {
             loading: false,
             data: initialData,
@@ -483,44 +496,54 @@ class Community extends Component {
             chart: {
                 labels: years,
                 datasets: datasets
-            }
+            },
+            watching: false
         };
         this.calculateAvg = this.calculateAvg.bind(this);
+        this.total = this.total.bind(this);
+        this.toggleWatch = this.toggleWatch.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.communityData.name !== this.props.communityData.name) {
+        if (prevProps.name !== this.props.name) {
             for (let i = 0; i < Communities.data.length; i++) {
-                if (Communities.data[i].name === this.props.communityData.name) {
+                if (Communities.data[i].name === this.props.name) {
                     this.setState({data: Communities.data[i]});
                     break;
                 }
             }
-            this.setState({loading: true});
-        } 
-        if (!prevState.loading && this.state.loading) {
-            
+            let watching = false;
+            for (let i = 0; i < this.props.watchlist.length; i++) {
+                if (this.props.name === this.props.watchlist[i]) {
+                    console.log('where');
+                    watching = true;
+                    break;
+                }
+            }
+            this.setState({loading: true, watching: watching});
         }
         if (prevState.data.name !== this.state.data.name) {
             setTimeout(() => {
                 let prices = [];
-                let datasets = [];
+                let sales = [];
                 let years = [];
                 let lastYr;
                 for (let i = 9; i >= 0; i--) {
-                    let avgPrice = this.calculateAvg(this.state.data["sales info"][i].data).toFixed(0);
-                    prices.push(avgPrice !== 0 ? avgPrice : this.calculateAvg(this.state.data["sales info"][i + 1].data).toFixed(0));
+                    let avgPrice = Number(this.calculateAvg(this.state.data["sales info"][i].data, "Average Price").toFixed(0));
+                    prices.push(avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(this.state.data["sales info"][i + 1].data, "Average Price").toFixed(0)));
+                    sales.push(this.total(this.state.data["sales info"][i].data, "Sales"));
                     years.push(2019 - i);
                     if (i === 0) {
-                        lastYr = avgPrice !== 0 ? avgPrice : this.calculateAvg(this.state.data["sales info"][i + 1].data).toFixed(0);
+                        lastYr = avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(this.state.data["sales info"][i + 1].data, "Average Price").toFixed(0));
                     }
                 }
-                let avgPrice = this.calculateAvg(this.state.data["sales info"][10].data).toFixed(0);
-                prices.push(avgPrice !== 0 ? avgPrice : this.calculateAvg(this.state.data["sales info"][10].data).toFixed(0));
-                let thisYr = avgPrice !== 0 ? avgPrice : this.calculateAvg(this.state.data["sales info"][10].data).toFixed(0);
+                let avgPrice = Number(this.calculateAvg(this.state.data["sales info"][10].data, "Average Price").toFixed(0));
+                prices.push(avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(this.state.data["sales info"][0].data, "Average Price").toFixed(0)));
+                let thisYr = avgPrice !== 0 ? avgPrice : Number(this.calculateAvg(this.state.data["sales info"][0].data, "Average Price").toFixed(0));
                 let change = ((thisYr - lastYr) * 100 / lastYr).toFixed(2);
+                sales.push(this.total(this.state.data["sales info"][10].data, "Sales"));
                 years.push(2020);
-                datasets.push({
+                let datasets = [{
                     fill: true,
                     borderColor: '#14185e',
                     borderWidth: 2,
@@ -529,8 +552,20 @@ class Community extends Component {
                     pointBackgroundColor: '#14185e',
                     pointHoverRadius: 5,
                     label: 'Avg. Price',
-                    data: prices
-                });
+                    data: prices,
+                    yAxisID: 'price'
+                }, {
+                    fill: false,
+                    borderColor: '#e3690b',
+                    borderWidth: 2,
+                    pointBorderColor: '#e3690b',
+                    pointRadius: 2,
+                    pointBackgroundColor: '#e3690b',
+                    pointHoverRadius: 5,
+                    label: 'Sales',
+                    data: sales,
+                    yAxisID: 'sales'
+                }];
                 let config = {
                     labels: years,
                     datasets: datasets
@@ -540,15 +575,33 @@ class Community extends Component {
         }
     }
 
-    calculateAvg(houseTypes) {
+    calculateAvg(houseTypes, property) {
         let total = 0;
         let sales = 0;
         houseTypes.map(type => {
-            total += Number(type.data["Average Price"]) * Number(type.data["Sales"]);
+            total += Number(type.data[property]) * Number(type.data["Sales"]);
             sales += Number(type.data["Sales"]);
         })
         let avg = total/sales;
         return avg;
+    }
+
+    total(houseTypes, property) {
+        let sales = 0;
+        houseTypes.map(type => {
+            sales += Number(type.data[property]);
+        })
+        return sales;
+    }
+
+    toggleWatch() {
+        if (this.state.watching) {
+            this.setState({watching: false});
+        } else {
+            this.setState({watching: true});
+        }
+
+        this.props.updateWatch(this.props.name);
     }
 
     render() {
@@ -562,13 +615,44 @@ class Community extends Component {
                         <h1>{this.state.data.name}</h1>
                     </div>
                     <div className='header'>
-                        <h3>${this.calculateAvg(this.state.data["sales info"][10].data).toLocaleString()}</h3>
+                        <h3>${Number(this.calculateAvg(this.state.data["sales info"][10].data, "Average Price").toFixed(0)).toLocaleString()}</h3>
                         <h3 className={'change ' + (this.state.change > 0 ? 'gain' : 'loss')}>{(this.state.change > 0 ? '+' : '') + this.state.change}%</h3>
+                        <button className={this.state.watching ? 'remove' : 'add'} onClick={this.toggleWatch}>{this.state.watching ? 'Added to Watchlist' : 'Add to Watchlist'}</button>
                     </div>
                     <div className='chart'>
                         <Line
                             data={this.state.chart}
+                            options={{
+                                scales: {
+                                    yAxes: [{
+                                        id: 'price',
+                                        type: 'linear',
+                                        position: 'left',
+                                    }, {
+                                        id: 'sales',
+                                        type: 'linear',
+                                        position: 'right'
+                                    }]
+                                }
+                            }}
                         />
+                    </div>
+                    <div className='stats'>
+                        <h3>Community Stats</h3>
+                        <div className='grid'>
+                            <h4>2020 New Listings:</h4> <p>{this.total(this.state.data["sales info"][10].data, "New Listings")}</p>
+                            <h4>2020 Avg. Days on Market:</h4> <p>{(this.calculateAvg(this.state.data["sales info"][10].data, "Average DOM")).toFixed(2)}</p>
+                            <h4>2020 Sell-to-List Ratio:</h4> <p>{(this.calculateAvg(this.state.data["sales info"][10].data, "Average SP/LP")).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div className='stats'>
+                        <h3>Community Demographics</h3>
+                        <div className='grid'>
+                            <h4>Safety Rating:</h4> <p>{this.state.data["city info"]["Safety Index"]}</p>
+                            <h4>Education Rating:</h4> <p>{this.state.data["city info"]["Education Index"]}</p>
+                            <h4>Transportation Rating:</h4> <p>{this.state.data["city info"]["Transportation Index"]}</p>
+                        </div>
+                        <p className='data-disclaimer'>*Data collected from OpenData Toronto.</p>
                     </div>
                 </div> }
             </div>

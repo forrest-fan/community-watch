@@ -4,7 +4,7 @@
     bottom: 10px;
     left: 10px;
     width: 400px;
-    padding: 25px;
+    padding: 15px;
     background: var(--background);
     color: var(--text);
     box-shadow: 4px 4px 5px 2px var(--shadows);
@@ -13,17 +13,57 @@
     transition: 0.3s;
 }
 
-.Dashboard .search-bar {
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #aeaeae;
-    background: none;
-    font-family: Noto Sans;
-    font-size: 17px;
-    width: 100%;
+.Dashboard .container::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+	padding: 2px;
+	cursor: pointer;
 }
 
-.Dashboard .search-bar:focus {
-    border-color: var(--accent);
+.Dashboard .container::-webkit-scrollbar-track {
+    background: #ddd;
+	border-radius: 5px;
+}
+
+.Dashboard .container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(230,152,69, 0.5);
+    cursor: pointer;
+}
+
+.Dashboard .header {
+    position: fixed;
+}
+
+.Dashboard .header img {
+    vertical-align: middle;
+}
+
+.Dashboard .header h1 {
+    display: inline-block;
+}
+
+.Dashboard .container {
+    height: 80vh;
+    margin-top: 110px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5px;
+    padding-right: 15px;
+}
+
+.Dashboard .empty-watch {
+    height: 75px;
+    position: relative;
+}
+
+.Dashboard .empty-watch p {
+    position: absolute;
+    text-align: center;
+    width: 300px;
+    font-size: 16px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 

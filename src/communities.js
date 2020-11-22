@@ -5807,7 +5807,7 @@ export default {
 				"Municipality" : "Toronto E07",
 				"Safety Index" : "Moderate Risk",
 				"Education Index" : "Moderate",
-				"Transportation Index" : "Moderate",
+				"Transportation Index" : "Low",
 			},
 			"sales info" :  [
 				{
@@ -28085,8 +28085,8 @@ export default {
 			"city info" : {
 				"Area" : "Toronto",
 				"Municipality" : "Toronto C12",
-				"Safety Index" : "Moderate Risk",
-				"Education Index" : "Moderate",
+				"Safety Index" : "Low Risk",
+				"Education Index" : "High",
 				"Transportation Index" : "Moderate",
 			},
 			"sales info" :  [
@@ -53828,8 +53828,8 @@ export default {
 				"Area" : "Toronto",
 				"Municipality" : "Toronto C13",
 				"Safety Index" : "Moderate Risk",
-				"Education Index" : "Moderate",
-				"Transportation Index" : "Moderate",
+				"Education Index" : "High",
+				"Transportation Index" : "High",
 			},
 			"sales info" :  [
 				{
