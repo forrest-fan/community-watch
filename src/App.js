@@ -4,6 +4,7 @@ import lightOrangeMap from './LightOrangeMap';
 import Dashboard from './components/Dashboard/Dashboard';
 import Community from './components/Community/Community';
 import Toronto from './toronto.js';
+import Communities from './communities.js';
 
 let poly = Toronto.features.map(community => {
   return ({
@@ -24,8 +25,6 @@ let poly = Toronto.features.map(community => {
 
 export class App extends Component {
   constructor() {
-    
-    console.log(poly);
     super();
     this.state = {
       communityOpen: false,
@@ -37,11 +36,6 @@ export class App extends Component {
       }
     };
     this.openCommunity = this.openCommunity.bind(this);
-    this.renderCommunities = this.renderCommunities.bind(this);
-  }
-
-  renderCommunities() {
-    
   }
 
   openCommunity(communityData) {
